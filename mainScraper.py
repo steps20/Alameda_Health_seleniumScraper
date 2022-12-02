@@ -14,7 +14,7 @@ import xlsxwriter
 realUrl = "https://forms.alamedahealthsystem.org/salary/"
 fileName = input("File save as: ")
 keyword = input("Enter your search term: ")
-
+mainCounter = 1
 options = Options()
 options.headless = False
 
@@ -43,12 +43,9 @@ for i in range (0 ,27):
 #sleep is for load time
 time.sleep(3)
 
-
-mainCounter = 1
-
 #main loop
 while(True):
-	mainCounter = mainCounter + 1
+
 	try:
 		caret =driver.find_element(by=By.XPATH,
 			value="/html/body/div/div/div/div/div[2]/div/div["+str(mainCounter)+"]/div/div/div/div")
@@ -106,10 +103,12 @@ while(True):
 	else:
 		for i in range(len(hourlyList)):
 			worksheet.write((mainCounter-1), i+5, str(hourlyList[i]))
-	
+	#close caret & move pointer
+	mainCounter = mainCounter + 1
 	caret.click()
 	time.sleep(1)
-
+	
+#saving file closing driver
 wb.close()
 print("Done")
 driver.quit()
